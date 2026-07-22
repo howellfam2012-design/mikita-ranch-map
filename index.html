@@ -695,6 +695,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .patentee-thumb { display: block; max-width: 100%; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; }
   .patentee-thumb-caption { font-size: 10px; color: #888; margin-top: 2px; }
   .no-image-note { font-size: 11px; color: #888; font-style: italic; }
+  .candidate-badge { display: inline-block; background: #eab308; color: #1a1a1a; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; padding: 1px 6px; border-radius: 3px; margin-left: 6px; vertical-align: middle; }
+  .resolved-badge { display: inline-block; background: #16a34a; color: #fff; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; padding: 1px 6px; border-radius: 3px; margin-left: 6px; vertical-align: middle; }
 </style>
 </head>
 <body>
@@ -1699,6 +1701,19 @@ function styleFor(feature) {
 // --- Wyatt's-line homestead-patent history, from Wyatt_Mikita_Land_Line.docx ---
 // Nicknames, patentee bios, and scan images for the 7 parcels descending from
 // Andrew Mikita Jr. & Anna's 1982 estate division (4 to Rodger's line, 3 to Harry's).
+
+// Shared note: Ernest L. Mikita, founder of the Mikita Living Trust, is documented
+// as a son of Michael "Mike" Mikita Sr. (1863\u20131945) & Zuzana "Susie" Petrikova Mikita
+// (1874\u20131964) \u2014 the family's original 1904 homesteaders ("Family A" in this project's
+// research) \u2014 confirmed by Zuzana's own obituary, which names her three surviving sons
+// as Richard, Joseph, and Earnest (Ernest L.). Family A and Andro Mikita Sr.'s line
+// (Wyatt's own documented line) share no documented common ancestor \u2014 the project's own
+// research resolves them as two separate Mikita families in the same small Calhan/Ramah
+// parish, not blood relatives, despite the informal "first cousins" description elsewhere
+// in the project's records.
+const livingTrustFamilyNote =
+  "Ernest L. Mikita, who founded this trust with his wife Jean Ann, is documented as a son of Michael \u201cMike\u201d Mikita Sr. (1863\u20131945) & Zuzana \u201cSusie\u201d Petrikova Mikita (1874\u20131964) \u2014 the family's original 1904 homesteaders (\u201cFamily A\u201d). This is confirmed by Zuzana's own obituary, which names her three surviving sons as Richard, Joseph, and Earnest (Ernest L.). Family A and Andro Mikita Sr.'s line (Wyatt's own documented line \u2014 most of this ranch's other parcels) share no documented common ancestor: the project's research resolves them as two separate Mikita families sharing the same small Calhan/Ramah parish, not blood relatives \u2014 despite an informal \u201cfirst cousins\u201d description elsewhere in the family's own records.";
+
 const parcelHistory = {
   "R114087": {
     nickname: "Com Tract",
@@ -1761,18 +1776,132 @@ const parcelHistory = {
       { name: "John L. Pettit", img: null,
         note: "Same patent as Pet-W Tract (Doc #04354, Accession SER-108296, 1910); this parcel is the east 80 of that same 160-acre quarter." }
     ]
+  },
+  "R100550": {
+    nickname: null,
+    lineNote: "Mikita Living Trust \u2014 Section 36, the CR 81 home parcel",
+    familyContext: livingTrustFamilyNote +
+      " This parcel's own modern chain is directly documented: Frank Mikita (1909\u20131999, another of Michael Sr. & Zuzana's sons) and his wife Susie sold the full section to Frank's brother Ernest L. & Jean Ann for $32,000 on 04-15-1981 (Warranty Deed, Book 338/Page 674, Reception #236660). The original 1800s federal homestead patent underneath this section hasn't been identified yet \u2014 Section 36 is missing entirely from the pulled township patent register."
+  },
+  "R109847": {
+    nickname: null,
+    lineNote: "Mikita Living Trust \u2014 Sections 1 & 35 (T9S)",
+    familyContext: livingTrustFamilyNote +
+      " Ernest L. & Jean transferred this parcel into the Living Trust by quitclaim deed on 02-06-2014 (Reception #541310), the same year the trust was funded with Section 36. The underlying 1800s patent only partially closes for the Section 1 portion (government-lot subdivision leaves a gap in the NE\u00bc) and hasn't been researched at all for the Section 35, T9S portion."
+  },
+  "R100507": {
+    nickname: null,
+    lineNote: "Mikita Living Trust (Ernest L. & Jean Ann) \u2014 Section 14",
+    candidate: true,
+    familyContext: livingTrustFamilyNote,
+    patentees: [
+      { name: "Andrew J. Shideler", img: null,
+        note: "Timber Culture entry, Doc #140, patented 12-18-1897. Covers the W\u00bdSW + SE-SW + SW-SE corner of this parcel." },
+      { name: "Stefan Lenard", img: null,
+        note: "Doc #4239, patented 10-04-1900. Covers the NE-SW corner." },
+      { name: "Jabez G. Moore", img: "jabez_moore_patent",
+        note: "Doc #398, patented 11-10-1879 \u2014 the same patentee and scanned patent already confirmed on the adjoining Com-Jab-Eli Tract in Section 13. Covers the SE-SE corner here." },
+      { name: "Andro Hunyadi", img: null,
+        note: "Doc #4743, patented 03-07-1902. Covers the NE-SE corner \u2014 the same patentee whose patent corners into Section 13's NW corner. No scanned image obtained for this patent yet." }
+    ]
+  },
+  "R100536": {
+    nickname: null,
+    lineNote: "Mikita Living Trust \u2014 Trojanovich-origin, Section 25",
+    candidate: true,
+    familyContext: livingTrustFamilyNote,
+    patentees: [
+      { name: "Joseph D. Duncan, heirs of", img: null,
+        note: "Homestead patent granted posthumously to his heirs, Doc #203, 05-31-1899. Covers the E\u00bd NW\u00bc of Section 25 \u2014 this parcel's full acreage." }
+    ]
+  },
+  "R100537": {
+    nickname: null,
+    lineNote: "Mikita Living Trust \u2014 Trojanovich-origin, Sections 25\u201326",
+    candidate: true,
+    familyContext: livingTrustFamilyNote,
+    patentees: [
+      { name: "Joseph D. Duncan, heirs of", img: null,
+        note: "Same Doc #203 posthumous patent as R100536, covering the west half of the same NW\u00bc Section 25." },
+      { name: "Joseph D. Duncan", img: null,
+        note: "A separate, earlier patent by Duncan himself, Doc #6176, 03-16-1891, covering the SW\u00bc of Section 25." },
+      { name: "America T. Smith", img: null,
+        note: "Doc #198, patented 12-17-1898. Covers the north half of SE\u00bc Section 26." },
+      { name: "Stefan Mihalovis", img: null,
+        note: "Doc #6091, patented 09-18-1907. Covers the south half of SE\u00bc Section 26." }
+    ]
+  },
+  "R100549": {
+    nickname: null,
+    lineNote: "Mikita Living Trust \u2014 Section 35",
+    candidate: true,
+    familyContext: livingTrustFamilyNote,
+    patentees: [
+      { name: "Wesley J. Matthews", img: null,
+        note: "Two separate patents, Doc #3783 (09-28-1898) and Doc #6811 (12-01-1891), together covering all of NE\u00bc and the north half of SE\u00bc." },
+      { name: "Thomas Bible", img: null,
+        note: "Doc #6897, patented 01-05-1892. Covers the south half of SE\u00bc \u2014 closes the parcel with no gap." }
+    ]
+  },
+  "R120906": {
+    nickname: null,
+    lineNote: "Larry J. Mikita heirs \u2014 Section 2",
+    candidate: true,
+    familyContext: "This branch's own placement in the Mikita family isn't resolved \u2014 Larry Mikita's parentage among the family's documented generations hasn't been determined, and he doesn't clearly belong to either Family A (Michael Sr. & Zuzana's line) or Andro Mikita Sr.'s line. The land itself passed through his wife, Darlene M. Mikita, documented as a granddaughter of Matt Sr. Trojanovich \u2014 a separate, distinct Trojanovich family from Andro Sr.'s wife Mary's. On Darlene's side, the Mikita surname here comes through her marriage to Larry, not through blood.",
+    patentees: [
+      { name: "Andro Troyanovich & Mary E. Collins", img: null,
+        note: "Two federal patents \u2014 Doc #4194 (patented 1900) and Doc #5137 (patented 1904) \u2014 together cover this half-quarter; the source research doesn't specify which document belongs to which patentee. Possibly related to Andrew (Andrej) Trojanovich, Mary Trojanovich Mikita's own father, whose separate 1904 patent sits nearby \u2014 unconfirmed, and a project-wide name sweep found 'Andro' was a common Slavicized given name shared by several unrelated families in this area." }
+    ]
+  },
+  "R100398": {
+    nickname: null,
+    lineNote: "Joseph & Joyce Mikita \u2014 Section 11, Ramah",
+    candidate: true,
+    familyContext: "Joe Mikita (1907\u20131991), another of Michael Sr. & Zuzana's children (Family A), is a possible \u2014 but not yet confirmed \u2014 match to today's Joseph Mikita of Joseph & Joyce E. Mikita. No document has yet named both generations together to settle the link.",
+    patentees: [
+      { name: "John Cvaniga", img: null,
+        note: "Patented 09-09-1913, Doc #06538, Accession SER-354114. Located via a full, unfiltered GLO pull of T10S R61W. No scanned image obtained yet." }
+    ]
+  },
+  "R100403": {
+    nickname: null,
+    lineNote: "Joseph & Joyce Mikita \u2014 Section 13, Ramah",
+    familyContext: "Joe Mikita (1907\u20131991), another of Michael Sr. & Zuzana's children (Family A), is a possible \u2014 but not yet confirmed \u2014 match to today's Joseph Mikita of Joseph & Joyce E. Mikita. No document has yet named both generations together to settle the link. This parcel's own patent is only partially researched: a full township pull found no match for the NW\u00bc of this section."
+  },
+  "R100404": {
+    nickname: null,
+    lineNote: "Joseph & Joyce Mikita \u2014 Section 13, Ramah",
+    familyContext: "Joe Mikita (1907\u20131991), another of Michael Sr. & Zuzana's children (Family A), is a possible \u2014 but not yet confirmed \u2014 match to today's Joseph Mikita of Joseph & Joyce E. Mikita. No document has yet named both generations together to settle the link. This parcel's own patent is only partially researched."
+  },
+  "R100405": {
+    nickname: null,
+    lineNote: "Joseph & Joyce Mikita \u2014 Section 13, Ramah",
+    familyContext: "Joe Mikita (1907\u20131991), another of Michael Sr. & Zuzana's children (Family A), is a possible \u2014 but not yet confirmed \u2014 match to today's Joseph Mikita of Joseph & Joyce E. Mikita. No document has yet named both generations together to settle the link. This is the NW\u00bc corner that a full township pull hasn't matched to any patentee yet."
+  },
+  "R100445": {
+    nickname: null,
+    lineNote: "Ernest S. & Robin Mikita \u2014 Section 31, Ramah",
+    familyContext: "Ernest Scott Mikita married Robin Rae Stagner in 1995. A 1999 record of Ernest L. and Ernest S. jointly financing equipment together is read in this project's research as evidence of a father/son relationship \u2014 making Ernest S. very likely another Family A descendant, a son of Ernest L. Mikita and grandson of Michael Sr. & Zuzana. Not yet confirmed by a document naming the relationship directly. No federal patent has been identified for this parcel; some corners remain unmatched after a full 242-result township pull."
+  },
+  "R100448": {
+    nickname: null,
+    lineNote: "Ernest S. & Robin Mikita \u2014 Section 32, Ramah",
+    familyContext: "Ernest Scott Mikita married Robin Rae Stagner in 1995. A 1999 record of Ernest L. and Ernest S. jointly financing equipment together is read in this project's research as evidence of a father/son relationship \u2014 making Ernest S. very likely another Family A descendant, a son of Ernest L. Mikita and grandson of Michael Sr. & Zuzana. Not yet confirmed by a document naming the relationship directly. No federal patent has been identified for this parcel; some corners remain unmatched after a full 242-result township pull."
   }
 };
 
 function buildPopupHtml(p) {
   const hist = parcelHistory[p.account];
   let html =
-    '<div class="popup-title">' + p.account + (hist ? ' &mdash; ' + hist.nickname : '') + ' &mdash; ' + p.acres + ' ac</div>' +
+    '<div class="popup-title">' + p.account + (hist && hist.nickname ? ' &mdash; ' + hist.nickname : '') + ' &mdash; ' + p.acres + ' ac</div>' +
     '<div class="popup-row"><b>Owner:</b> ' + p.owner + '</div>' +
     '<div class="popup-row"><b>Legal:</b> ' + p.legal + '</div>' +
     '<div class="popup-row"><b>Branch:</b> ' + p.branch + '</div>';
-  if (hist) {
-    html += '<div class="popup-history"><div class="popup-history-title">' + hist.lineNote + ' \u2014 homestead patent history</div>';
+  if (hist && hist.patentees && hist.patentees.length) {
+    const badge = hist.candidate
+      ? '<span class="candidate-badge">Candidate</span>'
+      : '<span class="resolved-badge">Resolved</span>';
+    html += '<div class="popup-history"><div class="popup-history-title">' + hist.lineNote + badge + '</div>';
     hist.patentees.forEach(function (pt) {
       html += '<div class="patentee-block">';
       html += '<div class="patentee-name">' + pt.name + '</div>';
@@ -1787,6 +1916,10 @@ function buildPopupHtml(p) {
       html += '</div>';
     });
     html += '</div>';
+  }
+  if (hist && hist.familyContext) {
+    html += '<div class="popup-history"><div class="popup-history-title">Family line</div>' +
+            '<div class="patentee-note">' + hist.familyContext + '</div></div>';
   }
   return html;
 }
