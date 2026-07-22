@@ -686,6 +686,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .popup-title { font-weight: 700; font-size: 13px; margin-bottom: 3px; }
   .popup-row { font-size: 12px; color: #333; margin: 1px 0; }
   .leaflet-control-layers { font-size: 12.5px; }
+  .popup-history { margin-top: 8px; padding-top: 7px; border-top: 1px solid #ddd; }
+  .popup-history-title { font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; color: #888; margin-bottom: 5px; font-weight: 700; }
+  .patentee-block { margin-bottom: 9px; }
+  .patentee-block:last-child { margin-bottom: 0; }
+  .patentee-name { font-weight: 700; font-size: 12px; color: #222; margin-bottom: 2px; }
+  .patentee-note { font-size: 11.3px; color: #444; line-height: 1.35; margin: 0 0 5px 0; }
+  .patentee-thumb { display: block; max-width: 100%; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; }
+  .patentee-thumb-caption { font-size: 10px; color: #888; margin-top: 2px; }
+  .no-image-note { font-size: 11px; color: #888; font-style: italic; }
 </style>
 </head>
 <body>
@@ -693,7 +702,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 <div id="title-panel" class="panel">
   <h1>Mikita Family Ranch &mdash; Parcel Map</h1>
-  <p>20 parcels, ~4,281 acres across the Calhan (T10S/T9S&nbsp;R62W) and Ramah (T10S&nbsp;R61W) clusters, Elbert County, CO. Boundaries from the Elbert County Assessor GIS parcel layer. Base: satellite imagery + outdoor-style roads/labels/contours, combinable via the layer control (top right).</p>
+  <p>20 parcels, ~4,281 acres across the Calhan (T10S/T9S&nbsp;R62W) and Ramah (T10S&nbsp;R61W) clusters, Elbert County, CO. Boundaries from the Elbert County Assessor GIS parcel layer. Base: satellite imagery + outdoor-style roads/labels/contours, combinable via the layer control (top right). Click any parcel for owner &amp; legal detail &mdash; the 7 parcels on Wyatt's documented line also show original homestead patentees and scanned patent images.</p>
 </div>
 
 <div id="legend-panel" class="panel">
@@ -1687,16 +1696,107 @@ function styleFor(feature) {
   };
 }
 
+// --- Wyatt's-line homestead-patent history, from Wyatt_Mikita_Land_Line.docx ---
+// Nicknames, patentee bios, and scan images for the 7 parcels descending from
+// Andrew Mikita Jr. & Anna's 1982 estate division (4 to Rodger's line, 3 to Harry's).
+const parcelHistory = {
+  "R114087": {
+    nickname: "Com Tract",
+    lineNote: "Direct line \u2014 Rodger's parcels (Wyatt's grandfather)",
+    patentees: [
+      { name: "Comey Brown", img: "comey_brown_patent",
+        note: "Homestead Patent, Doc #4202, Certificate No. 4202, Application 8563, Land Office at Pueblo, 04-12-1900. The patent's own granting language (\u2018unto the said Comey Brown and to her heirs and assigns forever\u2019) confirms she was female \u2014 not derivable from the name alone. No birth, death, or biographical record yet located." }
+    ]
+  },
+  "R100506": {
+    nickname: "Com-Jab-Eli Tract",
+    lineNote: "Direct line \u2014 Rodger's parcels",
+    patentees: [
+      { name: "Comey Brown", img: "comey_brown_patent",
+        note: "Homestead Certificate No. 4202 (N\u00bd of this parcel, 80 ac), Land Office at Pueblo, 04-12-1900." },
+      { name: "Jabez G. Moore", img: "jabez_moore_patent",
+        note: "Homestead Certificate No. 398, Application 434, Land Office at Pueblo, 11-10-1879, signed by Rutherford B. Hayes. A single 160-acre claim spread across four non-adjacent sections (13/14/23/24, T11S R62W); the 40 ac in Section 13 is the corner that completes this parcel." },
+      { name: "Eliza English", img: "eliza_english_patent",
+        note: "Homestead Certificate No. 587, Application 496, Land Office at Pueblo, 04-09-1881, filed by John T. English as guardian for Eliza \u2014 legally declared insane, widow of Nathaniel English." }
+    ]
+  },
+  "R114088": {
+    nickname: "Eli-Wil Tract \u2014 the farmhouse parcel",
+    lineNote: "Direct line \u2014 Rodger's parcels; the family's home address",
+    patentees: [
+      { name: "Eliza English", img: "eliza_english_patent",
+        note: "N\u00bd + SW corner of this parcel, 120 ac, same Certificate No. 587, 1881, as Com-Jab-Eli Tract." },
+      { name: "William J. Ray", img: "william_ray_patent",
+        note: "SE corner, 40 ac. Cash-Sale Entry, Certificate No. 1778, Land Office at Pueblo, signed by President Rutherford B. Hayes, given 03-01-1878. The scanned patent names him \u2018of El Paso County, Colorado.\u2019" }
+    ]
+  },
+  "R100465": {
+    nickname: "Met Tract",
+    lineNote: "Direct line \u2014 Rodger's parcels (held jointly with Jason, Wyatt's father, since 2000)",
+    patentees: [
+      { name: "Met Trojanovic", img: "met_trojanovic_patent",
+        note: "Homestead Certificate No. 5458, Application 10392, Land Office at Pueblo, 12-20-1904, signed by Theodore Roosevelt. Full SW\u00bc Section 1, 160 ac \u2014 exact match, no gap. Relation to Andro (Andrej) Trojanovich, Wyatt's great-great-great-grandmother Mary's own father, whose 1904 patent sits one section over, remains undocumented." }
+    ]
+  },
+  "R123267": {
+    nickname: "And Tract",
+    lineNote: "Collateral line \u2014 Harry's parcels (now Daryl A. & Kirk E. Mikita)",
+    patentees: [
+      { name: "Andro Miketo", img: "andro_miketo_patent",
+        note: "Believed to be Wyatt's own great-great-grandfather, Andro Mikita Sr. (1884\u20131958), under a clerk's transliteration of the surname. Patent #384981, Doc #06848, Denver land office, 02-13-1914, signed by Woodrow Wilson \u2014 his original homestead, descended to Wyatt through his brother's line rather than his own." }
+    ]
+  },
+  "R100392": {
+    nickname: "Pet-W Tract",
+    lineNote: "Collateral line \u2014 Harry's parcels",
+    patentees: [
+      { name: "John L. Pettit", img: null,
+        note: "Patented the full SE\u00bc Section 9 (160 ac), Doc #04354, Accession SER-108296, 02-01-1910. This parcel is the west 80 of that quarter. Located via a full, unfiltered GLO pull of T10S R61W after section-filtered searches returned false negatives." }
+    ]
+  },
+  "R123266": {
+    nickname: "Pet-E Tract",
+    lineNote: "Collateral line \u2014 Harry's parcels",
+    patentees: [
+      { name: "John L. Pettit", img: null,
+        note: "Same patent as Pet-W Tract (Doc #04354, Accession SER-108296, 1910); this parcel is the east 80 of that same 160-acre quarter." }
+    ]
+  }
+};
+
+function buildPopupHtml(p) {
+  const hist = parcelHistory[p.account];
+  let html =
+    '<div class="popup-title">' + p.account + (hist ? ' &mdash; ' + hist.nickname : '') + ' &mdash; ' + p.acres + ' ac</div>' +
+    '<div class="popup-row"><b>Owner:</b> ' + p.owner + '</div>' +
+    '<div class="popup-row"><b>Legal:</b> ' + p.legal + '</div>' +
+    '<div class="popup-row"><b>Branch:</b> ' + p.branch + '</div>';
+  if (hist) {
+    html += '<div class="popup-history"><div class="popup-history-title">' + hist.lineNote + ' \u2014 homestead patent history</div>';
+    hist.patentees.forEach(function (pt) {
+      html += '<div class="patentee-block">';
+      html += '<div class="patentee-name">' + pt.name + '</div>';
+      html += '<div class="patentee-note">' + pt.note + '</div>';
+      if (pt.img) {
+        html += '<a href="images/full/' + pt.img + '.jpg" target="_blank" rel="noopener">' +
+                '<img class="patentee-thumb" src="images/thumbs/' + pt.img + '.jpg" alt="' + pt.name + ' patent scan"></a>' +
+                '<div class="patentee-thumb-caption">Tap image for full-size scan</div>';
+      } else {
+        html += '<div class="no-image-note">No scanned patent image located yet.</div>';
+      }
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+  return html;
+}
+
 const parcelLayer = L.geoJSON(parcelData, {
   style: styleFor,
   onEachFeature: function (feature, layer) {
     const p = feature.properties;
-    layer.bindPopup(
-      '<div class="popup-title">' + p.account + ' &mdash; ' + p.acres + ' ac</div>' +
-      '<div class="popup-row"><b>Owner:</b> ' + p.owner + '</div>' +
-      '<div class="popup-row"><b>Legal:</b> ' + p.legal + '</div>' +
-      '<div class="popup-row"><b>Branch:</b> ' + p.branch + '</div>'
-    );
+    const hasHistory = !!parcelHistory[p.account];
+    layer.bindPopup(buildPopupHtml(p), hasHistory ? { maxWidth: 300, maxHeight: 420 } : undefined);
     layer.on('mouseover', function () { layer.setStyle({ weight: 4, fillOpacity: 0.32 }); });
     layer.on('mouseout', function () { parcelLayer.resetStyle(layer); });
   }
